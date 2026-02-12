@@ -1,0 +1,28 @@
+{
+  "name": "@drupal-canvas/skills",
+  "private": true,
+  "description": "Collection of agents skills for developing Drupal Canvas Code Components",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drupal-canvas/skills.git"
+  },
+  "bugs": "https://github.com/drupal-canvas/skills/issues",
+  "homepage": "https://github.com/drupal-canvas/skills#readme",
+  "type": "module",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.6.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,json,html,md,mdx,yml}": "prettier --write"
+  },
+  "scripts": {
+    "format-check": "npm run s:prettier -- --check",
+    "format": "npm run s:prettier -- --write",
+    "code:fix:eslint": "npm run s:eslint -- --fix",
+    "s:prettier": "prettier \"**/*.{js,jsx,json,html,md,mdx,yml}\"",
+    "prepare": "husky"
+  }
+}
