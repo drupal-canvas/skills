@@ -276,6 +276,9 @@ const variants = cva("base-classes", {
 Slots allow other components to be embedded within a component. In React, each
 slot is received as a named prop that matches the slot key.
 
+This section is the slot schema source of truth. Other skills should reference
+these rules instead of redefining slot schema details.
+
 Before creating slots, confirm with the user unless the use case is clearly
 compositional (for example, rich nested content, or repeatable embedded
 components). For simple text-like values, prefer a prop.
