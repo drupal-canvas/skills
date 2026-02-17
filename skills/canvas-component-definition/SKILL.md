@@ -37,3 +37,31 @@ Every Canvas component MUST satisfy all checks below:
   array-of-object prop shapes; use slots for repeatable complex content)
 
 If any item is missing, the component is incomplete for Canvas usage.
+
+## Skill coordination
+
+Evaluate using companion skills in this order.
+
+1. `canvas-component-naming`
+   - Use when creating or renaming components, or reviewing naming consistency.
+2. `canvas-component-metadata`
+   - Use when creating/changing `component.yml`, props/slots, enums, or fixing
+     prop validation errors.
+3. `canvas-component-composability`
+   - Use when designing prop/slot structure, decomposing large components, or
+     deciding props vs slots.
+4. `canvas-slots-for-repeatable-content`
+   - Use when modeling repeatable lists/grids, converting array-of-object props
+     to slots.
+5. `canvas-styling-conventions`
+   - Use for all styling work: new components, style props, Tailwind token
+     usage, CVA variants, class changes, and prop changes that affect styles.
+6. `canvas-component-utils`
+   - Use when rendering formatted HTML text or media via `FormattedText` and
+     `Image`.
+7. `canvas-data-fetching`
+   - Use when fetching/rendering Drupal content with JSON:API, SWR, includes,
+     and filter patterns.
+8. `canvas-component-upload`
+   - Use after implementation is complete and validated, when uploading and
+     recovering from upload failures.
