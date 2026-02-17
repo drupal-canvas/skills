@@ -45,6 +45,13 @@ props:
 The prop ID (the key under `properties`) must be the camelCase conversion of the
 `title` value.
 
+Only include user-facing, Canvas-editable props in `component.yml`.
+Implementation-only React props must stay in JSX and must not be added to
+metadata.
+
+**Never include `className` in `component.yml`.** Treat it as a composition prop
+for developers, not a Canvas editor control.
+
 ```yaml
 # Correct
 props:

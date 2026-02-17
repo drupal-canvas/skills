@@ -66,6 +66,10 @@ const Card = ({ colorScheme, className, children }) => (
 );
 ```
 
+`className` is an implementation/composition prop, not an editor prop. Do not
+add `className` to `component.yml`, do not mark it as required, and do not
+surface it in Canvas metadata.
+
 ## Tailwind 4 theme variables
 
 Canvas projects use Tailwind CSS 4's `@theme` directive to define design tokens
