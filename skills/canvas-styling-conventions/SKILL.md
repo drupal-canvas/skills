@@ -2,10 +2,11 @@
 name: canvas-styling-conventions
 description:
   Style Canvas components with Tailwind CSS 4 theme tokens and approved utility
-  patterns. Use when (1) Adding colors or styling to components, (2) Working
-  with Tailwind theme tokens, (3) Adding or updating design tokens in
-  global.css, (4) Creating color/style props. Covers @theme variables, CVA
-  variants, and cn() utility.
+  patterns. Use when (1) Creating a new component, (2) Adding colors or styling
+  to components, (3) Working with Tailwind theme tokens, (4) Adding or updating
+  design tokens in global.css, (5) Creating color/style props, (6) Any change
+  where component props are added/removed/renamed/retyped and can affect
+  rendered styles. Covers @theme variables, CVA variants, and cn() utility.
 ---
 
 ## Technology stack
