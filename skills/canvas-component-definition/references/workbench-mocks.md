@@ -15,6 +15,37 @@ Author the mock file beside the component source and metadata.
 Every mock entry needs a `name`. Workbench uses it as the preview tab label.
 Author mock files as a JSON object with a top-level `mocks` array.
 
+Workbench already provides a built-in `Default` tab that renders the component
+using the first example value for each prop from `component.yml`.
+
+- Do not author a mock named `Default`
+- Do not create a second mock that duplicates the built-in `Default` preview
+- Add authored mocks only for additional preview states that the built-in
+  `Default` tab does not cover
+
+Choose descriptive names that explain what is different about the preview, such
+as `Dark`, `Featured`, `Centered`, or `Full width`.
+
+## Cover meaningful variations
+
+Workbench mocks are not only for proving that a component renders. They should
+also make important authoring choices easy to review.
+
+- Add mocks for meaningful prop variations, especially when a prop changes the
+  visual design, layout, density, emphasis, or component behavior
+- Prefer a small set of representative states over a mock for every possible
+  combination
+- Include at least one mock for each meaningful enum or boolean state when that
+  state materially changes what reviewers need to validate
+- Add combined states when the interaction between props is important, such as a
+  dark variant inside a dark section, or a full-width action with a large size
+- Skip redundant mocks when the built-in `Default` tab already covers the state
+  well and no additional review value is gained
+
+For example, if a button component supports `tone`, `size`, and `fullWidth`, a
+good mock set might include `Teal`, `Surface`, `Large`, and `Full width` rather
+than only a single custom state.
+
 ### Props format
 
 Use this when only root props change.
