@@ -61,6 +61,6 @@ Evaluate using companion skills in this order.
 5. `canvas-data-fetching`
    - Use when fetching/rendering Drupal content with JSON:API, SWR, includes,
      and filter patterns.
-6. `canvas-component-upload`
-   - Use after implementation is complete and validated, when uploading and
-     recovering from upload failures.
+6. `canvas-component-push`
+   - Use after implementation is complete and validated, when pushing changes
+     and recovering from push failures.
