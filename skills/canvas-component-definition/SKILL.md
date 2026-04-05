@@ -29,7 +29,8 @@ beyond Workbench's built-in `Default` tab.
 Every Canvas component MUST satisfy all checks below:
 
 - Component folder exists at `<components-root>/<machine-name>/` (use the
-  repository's configured components root, which may be defined in `.env`)
+  repository's configured components root, defined via `componentDir` in
+  `canvas.config.json` or the CLI default)
 - React implementation exists at `<components-root>/<machine-name>/index.jsx`
 - Metadata exists at `<components-root>/<machine-name>/component.yml`
 - `component.yml` includes required top-level keys (`name`, `machineName`,

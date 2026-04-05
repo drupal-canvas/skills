@@ -13,32 +13,68 @@ for their target site.
 
 ### Setup gate
 
-Before running any push command:
-
-1. Check that a `.env` file exists in the project root.
-2. If `.env` exists, verify these values are set:
-   - `CANVAS_SITE_URL`
-   - `CANVAS_CLIENT_ID`
-   - `CANVAS_CLIENT_SECRET`
-3. If `.env` is missing, or any required value is missing, **stop** and ask the
-   user to complete setup first.
-4. **Do not guess setup steps**. Point the user to the official docs:
-   - Drupal Canvas OAuth module setup:
-     <https://git.drupalcode.org/project/canvas/-/tree/1.x/modules/canvas_oauth#2-setup>
-   - Drupal Canvas CLI package/docs:
-     <https://www.npmjs.com/package/@drupal-canvas/cli>
-5. Continue only after the user confirms setup is complete.
-
-## Run push
-
-When component work is complete and validated, ask the user if they would like
-to push the current Canvas changes to Canvas. `canvas push --yes` will push all
-current changes; it does not support selecting specific components. If there are
-unrelated or unvalidated Canvas changes in the working tree, stop and ask the
-user how they want to proceed. Make sure to use the right package manager. For
-example, if using npm, run the following command:
+Before running any pull or push command, confirm the user has a
+`CANVAS_ACCESS_TOKEN` and the site URL. These are passed inline — no `.env`
+setup required:
 
 ```bash
+CANVAS_ACCESS_TOKEN=your-bearer-token npx canvas pull --site-url https://your-site.com
+CANVAS_ACCESS_TOKEN=your-bearer-token npx canvas push --site-url https://your-site.com --yes
+```
+
+If the user has not yet provided a token and site URL, **stop** and ask them to
+supply both before continuing.
+
+**Alternative — OAuth client credentials:**
+
+If the user does not have a pre-issued token, they can use OAuth instead. Check
+that a `.env` file exists in the project root with these values set:
+
+- `CANVAS_SITE_URL`
+- `CANVAS_CLIENT_ID`
+- `CANVAS_CLIENT_SECRET`
+
+If `.env` is missing or any required value is missing, **stop** and ask the
+user to complete setup first. Point them to the official docs:
+
+- Drupal Canvas OAuth module setup:
+  <https://git.drupalcode.org/project/canvas/-/tree/1.x/modules/canvas_oauth#2-setup>
+- Drupal Canvas CLI package/docs:
+  <https://www.npmjs.com/package/@drupal-canvas/cli>
+
+Continue only after the user confirms setup is complete.
+
+## Run pull then push
+
+Always run `canvas pull` before `canvas push` to sync remote components
+locally. Pushing without pulling first risks overwriting or losing components
+that exist on the remote but are not present in the local working tree.
+
+### Step 1: Pull
+
+Pull the latest components from Canvas before making any push. Make sure to use
+the right package manager. For example, if using npm:
+
+```bash
+# With CANVAS_ACCESS_TOKEN
+CANVAS_ACCESS_TOKEN=your-bearer-token npx canvas pull --site-url https://your-site.com
+
+# Without CANVAS_ACCESS_TOKEN (OAuth via .env)
+npx canvas pull
+```
+
+### Step 2: Push
+
+When component work is complete and validated, ask the user if they would like
+to push. `canvas push --yes` pushes all current changes; it does not support
+selecting specific components. If there are unrelated or unvalidated Canvas
+changes in the working tree, stop and ask the user how they want to proceed.
+
+```bash
+# With CANVAS_ACCESS_TOKEN
+CANVAS_ACCESS_TOKEN=your-bearer-token npx canvas push --site-url https://your-site.com --yes
+
+# Without CANVAS_ACCESS_TOKEN (OAuth via .env)
 npx canvas push --yes
 ```
 
@@ -66,9 +102,13 @@ Point the user to the official setup docs:
 - Drupal Canvas CLI package/docs:
   <https://www.npmjs.com/package/@drupal-canvas/cli>
 
-Ask them to verify and update `.env` values (`CANVAS_SITE_URL`,
-`CANVAS_CLIENT_ID`, `CANVAS_CLIENT_SECRET`) and OAuth/CLI setup, then retry the
-push only after they confirm setup updates are complete.
+Ask them to verify their auth setup and retry only after they confirm it is
+corrected.
+
+- OAuth: verify `.env` values `CANVAS_SITE_URL`, `CANVAS_CLIENT_ID`,
+  `CANVAS_CLIENT_SECRET`
+- Bearer token: verify the inline `CANVAS_ACCESS_TOKEN` value and
+  `--site-url` argument are correct
 
 ### Dependency-related failures
 
