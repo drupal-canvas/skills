@@ -1,6 +1,10 @@
 # Component Mocks
 
 Canvas Workbench is the supported tool for local component preview work.
+Workbench currently supports React projects only; in headless Vue or Astro
+projects, still author `mocks.json` files the same way — the format is
+framework-neutral — but verify components through the framework dev server (see
+[`canvas-headless`](../../canvas-headless/SKILL.md)).
 
 Use these rules when authoring component mocks:
 

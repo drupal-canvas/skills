@@ -12,6 +12,17 @@ description:
 
 # Canvas navigation components
 
+## Headless gate
+
+Before applying this skill, check `package.json` for a dependency named
+`@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
+present, this is a Canvas Headless codebase — read
+[`canvas-headless`](../canvas-headless/SKILL.md) first. The decomposition,
+naming, and accessibility guidance below applies unchanged, but the fetch
+patterns (SWR, `JsonApiClient`, `sortMenu`, `getPageData` from `drupal-canvas`)
+are for Canvas-rendered React projects only; in headless projects fetch menus
+with the SDK's JSON:API client instead.
+
 Build **navigation** that fits Canvas: reusable names, clear **props**
 (`variant`, `menuName`) and **slots** (logo, utilities, mega-menu regions),
 correct **data source** (Drupal menu vs breadcrumb context vs static), and

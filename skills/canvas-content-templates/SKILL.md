@@ -10,6 +10,16 @@ description:
   modes render as Canvas component trees.
 ---
 
+## Headless gate
+
+Before applying this skill, check `package.json` for a dependency named
+`@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
+present, this is a Canvas Headless codebase — read
+[`canvas-headless`](../canvas-headless/SKILL.md) first. Headless projects do not
+sync content templates by default (`sync.contentTemplates` is `false` and no
+`content-templates/` directory exists). Do not create content templates there
+unless the user has explicitly enabled content-template sync.
+
 ## Canonical definition
 
 A content template is a JSON file that maps a Drupal content entity (identified

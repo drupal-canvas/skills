@@ -8,6 +8,16 @@ description:
   verification as part of the implementation workflow.
 ---
 
+## Headless gate
+
+Before applying this skill, check `package.json` for a dependency named
+`@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
+present, this is a Canvas Headless codebase — read
+[`canvas-headless`](../canvas-headless/SKILL.md) first. Workbench currently
+supports React projects only: use it in React headless projects (Next.js,
+TanStack Start), but in Nuxt and Astro projects verify components through the
+framework dev server instead.
+
 ## Installation gate
 
 Before trying to use Workbench, detect the project's package manager and use its

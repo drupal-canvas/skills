@@ -7,6 +7,16 @@ description:
   including placement, structure, format constraints, and validation.
 ---
 
+## Headless gate
+
+Before applying this skill, check `package.json` for a dependency named
+`@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
+present, this is a Canvas Headless codebase — read
+[`canvas-headless`](../canvas-headless/SKILL.md) first. Headless projects do not
+sync page specs by default (`sync.pages` is `false` and no `pages/` directory
+exists); pages are routes in the framework app. Do not create page JSON specs
+there unless the user has explicitly enabled page sync.
+
 ## Canonical definition
 
 A Canvas page is a JSON page spec stored in the repository's configured

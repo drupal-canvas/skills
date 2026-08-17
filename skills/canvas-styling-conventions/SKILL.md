@@ -9,6 +9,16 @@ description:
   rendered styles. Covers @theme variables, CVA variants, and cn() utility.
 ---
 
+## Headless gate
+
+Before applying this skill, check `package.json` for a dependency named
+`@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
+present, this is a Canvas Headless codebase — read
+[`canvas-headless`](../canvas-headless/SKILL.md) first; it overrides the
+React-specific guidance below. The Tailwind 4 theme-token guidance in this skill
+applies to headless projects unchanged; the `cn()`, CVA, and `className`
+sections are React-specific.
+
 ## Technology stack
 
 | Technology                           | Purpose            |
@@ -19,6 +29,11 @@ description:
 
 Only use these dependencies for styling. Do not add third-party CSS libraries or
 create new styling utilities.
+
+In a Canvas Headless codebase, the `drupal-canvas` package (and its `cn()`) is
+not supported, and CVA applies only to React projects. Use the framework's own
+class-composition idiom instead — see
+[`canvas-headless`](../canvas-headless/SKILL.md).
 
 ## Styling conventions
 
@@ -57,8 +72,12 @@ const Button = ({ variant, className, children }) => (
 
 ## Accept className for style customization
 
-Every component should accept a `className` prop to allow style overrides. Pass
-it to `cn()` as the last argument so consumer classes take precedence.
+This rule is React-specific; in Vue and Astro components, rely on the
+framework's own class pass-through (attribute fallthrough in Vue, a `class` prop
+in Astro) when consumers need style overrides.
+
+Every React component should accept a `className` prop to allow style overrides.
+Pass it to `cn()` as the last argument so consumer classes take precedence.
 
 ```jsx
 const Card = ({ colorScheme, className, children }) => (
