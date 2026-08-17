@@ -29,7 +29,8 @@ internally.
 
 When detected, the guidance in this skill **overrides** React-specific guidance
 in other Canvas skills. When not detected, the project is a Canvas-rendered
-React project and the other skills apply as written.
+React project and the other skills apply as written. These are the only two
+project types: no headless dependency always means a React codebase.
 
 ## What stays the same
 

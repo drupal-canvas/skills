@@ -9,13 +9,16 @@ description:
   Canvas-ready components.
 ---
 
-## Headless gate
+## Project type
 
 Before applying this skill, check `package.json` for a dependency named
 `@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
 present, this is a Canvas Headless codebase — read
 [`canvas-headless`](../canvas-headless/SKILL.md) first; it overrides the
-React-specific guidance below.
+React-specific guidance below. If no such dependency is present, this is a
+Canvas-rendered React codebase: components are React (`index.jsx`/`.tsx`) and
+everything in this skill applies as written. These are the only two project
+types.
 
 ## Canonical definition
 

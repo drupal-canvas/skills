@@ -7,7 +7,7 @@ description:
   require retry.
 ---
 
-## Headless gate
+## Project type
 
 Before applying this skill, check `package.json` for a dependency named
 `@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
@@ -24,7 +24,9 @@ there:
   imports are pushed, so dependency-order failures cannot occur.
 
 The setup gate, auth handling, and connection-failure rules below apply
-unchanged.
+unchanged. If no such dependency is present, this is a Canvas-rendered React
+codebase: components are React (`index.jsx`/`.tsx`) and everything in this skill
+applies as written. These are the only two project types.
 
 ## Activation guard
 

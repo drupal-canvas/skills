@@ -12,7 +12,7 @@ description:
 
 # Data fetching
 
-## Headless gate
+## Project type
 
 Before applying this skill, check `package.json` for a dependency named
 `@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
@@ -23,7 +23,10 @@ page trees with the SDK's `fetchPage()` and content with the SDK's JSON:API
 client (`getClient()`), using the framework's idiomatic data-loading path. Do
 not copy the SWR + `JsonApiClient` patterns below into a headless codebase. The
 content-modeling workflow in this skill (identifying content types, verifying
-queries, checking deserialized shapes) still applies conceptually.
+queries, checking deserialized shapes) still applies conceptually. If no such
+dependency is present, this is a Canvas-rendered React codebase: components are
+React (`index.jsx`/`.tsx`) and everything in this skill applies as written.
+These are the only two project types.
 
 ## Data fetching with SWR
 
