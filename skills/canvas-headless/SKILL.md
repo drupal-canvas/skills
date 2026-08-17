@@ -4,11 +4,10 @@ description:
   Use when working in a Canvas Headless codebase — any project with
   `@drupal-canvas/headless` or `@drupal-canvas/headless-*` in `package.json`,
   i.e. a Next.js, Nuxt, Astro, or TanStack Start app rendering Canvas
-  components. Also use when a task mentions headless, decoupled frontends,
-  external components, or one of those frameworks. Establishes what differs
-  from Canvas-rendered React projects: per-framework entry files and slot
-  consumption, the unsupported `drupal-canvas` package, SDK-based data
-  fetching, and changed push/pull/validate semantics.
+  components. Establishes what differs from Canvas-rendered React projects:
+  per-framework entry files and slot consumption, the unsupported
+  `drupal-canvas` package, SDK-based data fetching, and changed
+  push/pull/validate semantics.
 ---
 
 # Canvas Headless
@@ -43,7 +42,9 @@ The Canvas component contract is framework-neutral and carries over unchanged:
   prop shapes
 - Props/slots modeling rules, repeatable-content patterns, and granularity
   checks (`canvas-component-composability`, `canvas-design-decomposition`)
-- Workbench mock files (`mocks.json`) authored beside the component
+- Workbench mock files (`mocks.json`) beside the component — in React projects
+  only, since only Workbench reads them; do not create mocks in non-React
+  projects
 - Tailwind CSS 4 with `@theme` design tokens in the global CSS file configured
   by `globalCssPath` in `canvas.config.json`
 
@@ -58,8 +59,8 @@ project's framework:
 | Vue (Nuxt)                | `index.vue`          | `<slot name="slotKey" />`     |
 | Astro                     | `index.astro`        | `<slot name="slotKey" />`     |
 
-Discovery also accepts `.svelte` entries, but no Svelte adapter currently
-exists.
+Discovery also accepts `.svelte` entries, but no official Svelte adapter
+currently exists.
 
 Component registration is automatic: the headless SDK generates a registry
 module from the discovered components (for example under `.canvas/`). Never
@@ -76,11 +77,15 @@ Use framework-native alternatives instead:
 - **Rich text / HTML props:** render with the framework's HTML-injection
   primitive (`v-html` in Vue, `set:html` in Astro, `dangerouslySetInnerHTML` in
   React)
-- **Images:** a plain `<img>` element with `src`, `alt`, `width`, and `height`
-  from the image prop object
+- **Images:** the framework's image-optimization component where one exists
+  (`next/image` in Next.js, `<Image>` from `astro:assets` in Astro, `<NuxtImg>`
+  from `@nuxt/image` in Nuxt); otherwise a plain `<img>` element with `src`,
+  `alt`, `width`, and `height` from the image prop object
 - **Class composition:** the framework's own idiom (array/object class bindings
   in Vue, `class:list` in Astro, template literals or an existing utility in
-  React) — follow the conventions already present in the project
+  React) — follow the conventions already present in the project.
+  class-variance-authority (CVA) works in any framework when the project
+  installs it.
 
 ## Data fetching
 
@@ -120,15 +125,15 @@ above) and changes behavior without any flag:
 
 ## Pages, regions, and content templates
 
-Headless projects do not sync page, region, or content-template specs by
-default: `canvas.config.json` sets `sync.pages`, `sync.regions`, and
-`sync.contentTemplates` to `false`, and the corresponding directories do not
-exist. Routing and layout belong to the framework app (its own routes, layout
-files, and catch-all page rendering `fetchPage()` results).
-
-Do not create `pages/`, `regions/`, or `content-templates/` directories, page
-JSON specs, or a `layout.jsx` in a headless codebase unless the user has
-explicitly enabled the matching `sync` option.
+- **Global regions are not supported** in headless projects. Site chrome and
+  layout belong to the framework app (its own routes and layout files, with a
+  catch-all route rendering `fetchPage()` results). Do not create region specs
+  or a `layout.jsx`.
+- **Page specs and content templates work in headless codebases**, controlled by
+  the `sync.pages` and `sync.contentTemplates` options in `canvas.config.json`.
+  Only create them when the matching option is enabled. Projects generated with
+  Canvas Create (`@drupal-canvas/create`) disable both by default and ship
+  without `pages/` or `content-templates/` directories.
 
 ## Verification
 

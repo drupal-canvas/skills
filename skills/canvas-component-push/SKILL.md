@@ -22,8 +22,6 @@ there:
   `canvas pull` excludes them.
 - The dependency-retry guidance below does not apply to external components: no
   imports are pushed, so dependency-order failures cannot occur.
-- Page push and media reconciliation apply only if page sync is explicitly
-  enabled; headless projects disable it by default.
 
 The setup gate, auth handling, and connection-failure rules below apply
 unchanged.

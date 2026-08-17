@@ -21,7 +21,7 @@ present, this is a Canvas Headless codebase — read
 naming, and accessibility guidance below applies unchanged, but the fetch
 patterns (SWR, `JsonApiClient`, `sortMenu`, `getPageData` from `drupal-canvas`)
 are for Canvas-rendered React projects only; in headless projects fetch menus
-with the SDK's JSON:API client instead.
+with the SDK's JSON:API client (`getClient()`) instead.
 
 Build **navigation** that fits Canvas: reusable names, clear **props**
 (`variant`, `menuName`) and **slots** (logo, utilities, mega-menu regions),

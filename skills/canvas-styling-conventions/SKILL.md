@@ -16,8 +16,8 @@ Before applying this skill, check `package.json` for a dependency named
 present, this is a Canvas Headless codebase — read
 [`canvas-headless`](../canvas-headless/SKILL.md) first; it overrides the
 React-specific guidance below. The Tailwind 4 theme-token guidance in this skill
-applies to headless projects unchanged; the `cn()`, CVA, and `className`
-sections are React-specific.
+applies to headless projects unchanged; the `cn()` and `className` sections are
+React-specific.
 
 ## Technology stack
 
@@ -31,8 +31,8 @@ Only use these dependencies for styling. Do not add third-party CSS libraries or
 create new styling utilities.
 
 In a Canvas Headless codebase, the `drupal-canvas` package (and its `cn()`) is
-not supported, and CVA applies only to React projects. Use the framework's own
-class-composition idiom instead — see
+not supported. CVA still works in any framework when the project installs it;
+for class merging, use the framework's own class-composition idiom — see
 [`canvas-headless`](../canvas-headless/SKILL.md).
 
 ## Styling conventions

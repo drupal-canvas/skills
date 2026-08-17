@@ -14,11 +14,8 @@ description:
 Before applying this skill, check `package.json` for a dependency named
 `@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
 present, this is a Canvas Headless codebase — read
-[`canvas-headless`](../canvas-headless/SKILL.md) first. Headless projects do not
-sync region specs by default (`sync.regions` is `false` and no `regions/`
-directory exists), and the `Region`-based layout component below does not apply:
-site chrome and layout belong to the framework app. Do not create region specs
-or a layout file there unless the user has explicitly enabled region sync.
+[`canvas-headless`](../canvas-headless/SKILL.md) first. Global regions are not
+supported in headless projects; this skill does not apply there.
 
 ## Canonical definition
 

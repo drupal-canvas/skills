@@ -357,9 +357,8 @@ The `examples` value must be the enum value, not the display label.
 ### Enum values must match implementation variant keys
 
 When the implementation maps enum props to styles through a variant map —
-class-variance-authority (CVA) in React, or a plain variant object in Vue and
-Astro — the variant keys must exactly match the enum values defined in
-`component.yml`.
+class-variance-authority (CVA) or a plain variant object — the variant keys must
+exactly match the enum values defined in `component.yml`.
 
 ```jsx
 // component.yml defines: enum: [left_aligned, center_aligned]
