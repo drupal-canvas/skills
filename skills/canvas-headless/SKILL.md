@@ -118,11 +118,9 @@ above) and changes behavior without any flag:
   migrate previously Drupal-hosted components into the headless codebase.
 - **`canvas scaffold`** is React-only. In a non-React headless project, create
   component files by hand, following an existing component in the repository.
-- **`canvas build` and `canvas validate` are headless-unaware.** In a non-React
-  headless project they emit `missing_js_entry` warnings for components whose
-  entry is `.vue` or `.astro` and drop those components from their output. These
-  warnings are false positives — do not "fix" them by adding JS entry files, and
-  do not treat them as push blockers.
+- **`canvas build` and `canvas validate` are headless-unaware.** Expect
+  `canvas build` to report "No components found. Nothing to build." in a
+  headless project; this is normal and not something to fix.
 
 ## Pages, regions, and content templates
 
