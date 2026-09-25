@@ -185,7 +185,7 @@ above) and changes behavior without any flag:
 - **`canvas pull`** excludes external components. Pull is useful once, to
   migrate previously Drupal-hosted components into the headless codebase. Review
   automatic getter conversions and remaining migration diagnostics; see
-  [`canvas-component-definition`](../canvas-component-definition/SKILL.md#migrating-pulled-components).
+  [`canvas-data-fetching`](../canvas-data-fetching/SKILL.md#migrating-pulled-components).
 - **`canvas scaffold`** is React-only. In a non-React headless project, create
   component files by hand, following an existing component in the repository.
 - **`canvas build` and `canvas validate` are headless-unaware.** Expect

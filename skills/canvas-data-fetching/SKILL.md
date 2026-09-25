@@ -49,6 +49,27 @@ still work in Drupal and Workbench, but throw elsewhere, even when the
 constructor receives an explicit backend URL. Do not use them in new code.
 Existing utility imports such as `getNodePath` and `sortMenu` stay unchanged.
 
+### Migrating pulled components
+
+`canvas pull` can rewrite safe `getPageData()` and `getSiteData()` calls to
+context hooks automatically. It requires both the connected site's
+`capabilities.contextHooks` metadata and the installed `drupal-canvas/react`
+entry exporting both hooks as runtime values; do not infer support from a
+version number alone. If support cannot be verified, review the reported
+limitation rather than forcing imports unsupported by the runtime.
+
+Migration is all-or-nothing per component file. Unsafe hook positions,
+identifier conflicts, or direct destructuring of getter results can leave a file
+unchanged. Client construction and helper modules receive diagnostics, not
+automatic conversion. `--skip-overwrite` files remain untouched.
+
+After a pull, review changed sources and diagnostics. The codemod does not add
+null guards or prove subsequent accesses safe; check nullable results, hook
+order, types, and rendered behavior. Migrate remaining client calls manually.
+Outside components/custom hooks, pass data or clients into helpers, or use
+`page.context` and request-aware `getClient()` in headless server code. Preserve
+access controls and never expose credentials.
+
 ### Page and site context
 
 ```jsx

@@ -110,37 +110,6 @@ of restating the same decision tree.
 - Surface the mismatch and tradeoff when it affects whether the request is still
   being followed.
 
-## Portable React runtime
-
-New React Code Components use `usePageContext()`, `useSiteContext()`, and
-`useJsonApiClient()` from `drupal-canvas/react` instead of legacy getters or
-client construction. Keep component functions synchronous, call hooks
-unconditionally, and handle nullable context. Rendering integrations own
-configuration and authentication. Follow
-[`canvas-data-fetching`](../canvas-data-fetching/SKILL.md) for examples; this
-contract applies to Drupal, Workbench, and React headless components alike.
-
-### Migrating pulled components
-
-`canvas pull` can rewrite safe `getPageData()` and `getSiteData()` calls to
-context hooks automatically. It requires both the connected site's
-`capabilities.contextHooks` metadata and the installed `drupal-canvas/react`
-entry exporting both hooks as runtime values; do not infer support from a
-version number alone. If support cannot be verified, review the reported
-limitation rather than forcing imports unsupported by the runtime.
-
-Migration is all-or-nothing per component file. Unsafe hook positions,
-identifier conflicts, or direct destructuring of getter results can leave a file
-unchanged. Client construction and helper modules receive diagnostics, not
-automatic conversion. `--skip-overwrite` files remain untouched.
-
-After a pull, review changed sources and diagnostics. The codemod does not add
-null guards or prove subsequent accesses safe; check nullable results, hook
-order, types, and rendered behavior. Migrate remaining client calls manually.
-Outside components/custom hooks, pass data or clients into helpers, or use
-`page.context` and request-aware `getClient()` in headless server code. Preserve
-access controls and never expose credentials.
-
 ## Workbench mocks
 
 Use `references/component-mocks.md` for mock naming, placement, format
