@@ -1,13 +1,12 @@
 ---
 name: canvas-headless
-description:
+description: >-
   Use when working in a Canvas Headless codebase — any project with
   `@drupal-canvas/headless` or `@drupal-canvas/headless-*` in `package.json`,
   i.e. a Next.js, Nuxt, Astro, TanStack Start, or Angular app rendering Canvas
   components. Establishes what differs from Canvas-rendered React projects:
-  per-framework entry files and slot consumption, portable
-  runtime APIs, SDK-based data fetching, and changed
-  push/pull/validate semantics.
+  per-framework entry files and slot consumption, portable runtime APIs,
+  SDK-based data fetching, and changed push/pull/validate semantics.
 ---
 
 # Canvas Headless
