@@ -3,19 +3,19 @@ name: canvas-headless
 description:
   Use when working in a Canvas Headless codebase — any project with
   `@drupal-canvas/headless` or `@drupal-canvas/headless-*` in `package.json`,
-  i.e. a Next.js, Nuxt, Astro, or TanStack Start app rendering Canvas
+  i.e. a Next.js, Nuxt, Astro, TanStack Start, or Angular app rendering Canvas
   components. Establishes what differs from Canvas-rendered React projects:
-  per-framework entry files and slot consumption, the unsupported
-  `drupal-canvas` package, SDK-based data fetching, and changed
+  per-framework entry files and slot consumption, portable
+  runtime APIs, SDK-based data fetching, and changed
   push/pull/validate semantics.
 ---
 
 # Canvas Headless
 
-Canvas Headless lets an external frontend application (Next.js, Nuxt, Astro, or
-TanStack Start) render Canvas components instead of Drupal. Components are
-authored in the frontend codebase in that framework's own language, and only
-their **metadata** is registered with Drupal — no component code is pushed.
+Canvas Headless lets an external frontend application (including Angular) render
+Canvas components instead of Drupal. Components are authored in the frontend
+codebase in that framework's own language, and only their **metadata** is
+registered with Drupal — no component code is pushed.
 
 This skill is the source of truth for how Canvas skills apply in a headless
 codebase. Other `canvas-*` skills link here instead of restating these rules.
@@ -68,12 +68,23 @@ module from the discovered components (for example under `.canvas/`). Never
 write manual component-to-machine-name mappings and never edit generated
 `.canvas/` files.
 
-## The `drupal-canvas` package is not supported
+## Runtime APIs
 
-Do not import from the `drupal-canvas` package in a headless codebase. None of
-its exports — `cn`, `FormattedText`, `Image`, `JsonApiClient`, `Region`,
-`sortMenu`, `getPageData`, and the rest — are supported in headless components.
-Use framework-native alternatives instead:
+React components use `usePageContext`, `useSiteContext` and `useJsonApiClient`
+from `drupal-canvas/react`, handling nullable results. The renderer establishes
+providers from `page.context` and nonsecret runtime configuration. Existing
+`Image`, `FormattedText`, `cn` and menu/path utilities keep their public paths.
+`FormattedText` still requires trusted or sanitized HTML. Region APIs remain
+available but deprecated; do not add region-provider integration.
+
+Do not call `getPageData()`, `getSiteData()` or `new JsonApiClient()` in
+headless code. They are legacy Drupal/Workbench APIs; headless server code uses
+the request-aware SDK `getClient()`. Authoring helpers at
+`drupal-canvas/json-render-utils` are not the headless content renderer.
+
+Native Vue, Astro and Angular components keep their framework-native rendering,
+not React hooks/providers. The existing component implementations need no
+rewrite:
 
 - **Rich text / HTML props:** render with the framework's HTML-injection
   primitive (`v-html` in Vue, `set:html` in Astro, `dangerouslySetInnerHTML` in
@@ -88,22 +99,47 @@ Use framework-native alternatives instead:
   class-variance-authority (CVA) works in any framework when the project
   installs it.
 
+## Angular binding
+
+Keep `provideCanvas()` in browser and server bootstrap providers. Components use
+`CanvasPageStore` signals; page/site context is on `store.page()?.context`. The
+tree renderer takes `tree` and `components`, not a React `context` input.
+Standalone components use `index.ts` and `CanvasSlot` for named slots. Preserve
+the generated browser registry/server manifest boundary and existing component
+metadata.
+
+The template's server-only wrapper mounts the JSON:API proxy using the
+documented `createCanvasRequest()` accessor and always finalizes its responses.
+Existing request validation and draft/session routes remain unchanged. Use
+`context.server.getClient()` only on the server if adding queries; never
+serialize that accessor or its client. Native Angular components must not import
+React hooks or providers.
+
 ## Data fetching
 
-Fetch Drupal data through the headless SDK, not through `drupal-canvas`:
+Load page trees and server-side data through the headless SDK:
 
 - **Page trees:** `fetchPage()` from the framework's adapter package. It runs
   server-side only (server components/functions in Next.js and TanStack Start,
   Nitro server routes in Nuxt, the Astro context in Astro). Pass the result to
-  `CanvasComponentTree`.
-- **Content queries (lists, entities, menus):** the JSON:API client from the
-  headless SDK — `getClient()` (public) or the draft-aware variant — instead of
-  `JsonApiClient` from `drupal-canvas`.
+  `CanvasComponentTree`; React renderers also receive `context={page.context}`.
+- **Content queries (lists, entities, menus):** use the SDK's request-aware
+  `getClient()`, which selects public or draft access from the current session.
+  Its shared client uses `DefaultSerializer`: collections are arrays and fields
+  are flattened onto resources, not nested under `data`/`attributes`.
 - Prefer the framework's idiomatic data-loading path (server components, route
   loaders, `useFetch`, Astro frontmatter) over client-side fetching libraries.
 
-The SWR + `JsonApiClient` patterns in `canvas-data-fetching` describe
-Canvas-rendered React projects; do not copy them into a headless codebase.
+For portable React components, use `useJsonApiClient()` from
+`drupal-canvas/react`, not legacy constructor examples in
+`canvas-data-fetching`. Browser requests use the application's same-origin SDK
+proxy. Credentials stay in the server/session integration, never in page context
+or serialized clients.
+
+For components that use SWR, prefetch draft data with server `getClient()` and
+pass authorized, request-scoped SWR fallback data with matching keys. The
+renderer's draft client cannot fetch during SSR. Components remain synchronous;
+renewal does not automatically clear application caches.
 
 ## CLI semantics in a headless codebase
 
@@ -137,7 +173,7 @@ above) and changes behavior without any flag:
 ## Verification
 
 Canvas Workbench currently supports React projects only. In React headless
-projects (Next.js, TanStack Start) use Workbench as usual. In Nuxt and Astro
-projects, verify components by running the framework dev server and viewing
-pages rendered through `CanvasComponentTree`, including the Canvas editor
-preview when connected to a Drupal site.
+projects (Next.js, TanStack Start) use Workbench as usual. In Nuxt, Astro and
+Angular projects, verify components by running the framework dev server and
+viewing pages rendered through `CanvasComponentTree`, including the Canvas
+editor preview when connected to a Drupal site.

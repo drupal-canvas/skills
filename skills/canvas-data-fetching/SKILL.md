@@ -17,11 +17,13 @@ description:
 Before applying this skill, check `package.json` for a dependency named
 `@drupal-canvas/headless` or starting with `@drupal-canvas/headless-`. If one is
 present, this is a Canvas Headless codebase — read
-[`canvas-headless`](../canvas-headless/SKILL.md) first. In headless projects the
-`drupal-canvas` package (including its `JsonApiClient`) is not supported: fetch
-page trees with the SDK's `fetchPage()` and content with the SDK's JSON:API
-client (`getClient()`), using the framework's idiomatic data-loading path. Do
-not copy the SWR + `JsonApiClient` patterns below into a headless codebase. The
+[`canvas-headless`](../canvas-headless/SKILL.md) first. In headless projects,
+fetch page trees with the SDK's `fetchPage()` and server-side content with its
+request-aware `getClient()`, using the framework's idiomatic data-loading path.
+Portable React components use `useJsonApiClient()` from `drupal-canvas/react`
+and the application's same-origin SDK proxy, not `new JsonApiClient()`. For SWR
+draft rendering, follow the request-scoped server prefetch and fallback rules in
+`canvas-headless`; do not copy the legacy constructor patterns below. The
 content-modeling workflow in this skill (identifying content types, verifying
 queries, checking deserialized shapes) still applies conceptually. If no such
 dependency is present, this is a Canvas-rendered React codebase: components are
